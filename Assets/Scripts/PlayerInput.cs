@@ -37,8 +37,14 @@ public class PlayerInput : MonoBehaviour
             Vector2 zero = new Vector2(0, 0);
             _eventBoost.TriggerLook(zero); 
         }
+    }
 
-            //Debug.Log(context.ReadValue<Vector2>());
+    public void OnJump(CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            _eventBoost?.TriggerJump();
+        }
     }
 
 

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class EventBoost : MonoBehaviour
 {
@@ -7,9 +8,9 @@ public class EventBoost : MonoBehaviour
 
     public  event Action<Vector2> _OnLookCallBack;
 
-    public  event Action _OnJump;
+    public  event Action  _OnJump;
 
-    public  event Action _OnDance;
+    public  event Action  _OnDance;
 
     public event Action<bool> _OnShoot;
 

@@ -18,14 +18,14 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-       if (Instance != null)
+        if (Instance != null)
         {
-            Destroy(this);  
+            Destroy(this);
         }
 
-       Instance = this;
+        Instance = this;
 
-       DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this);
 
         _inputmen.Init(_inet);
 
@@ -39,26 +39,69 @@ public class GameManager : MonoBehaviour
         switch (type)
         {
             case ButtonType.Start:
-            OnStateRequest(GameState.Playing);
-            break;
+                OnStateRequest(GameState.Playing);
+                break;
 
             case ButtonType.Info:
-            break;
+                break;
 
             case ButtonType.Settings:
-            break;
+                break;
 
             case ButtonType.Exit:
-            Application.Quit();
-            break;
+                Application.Quit();
+                break;
 
             case ButtonType.MainMenu:
-            OnStateRequest(GameState.MainMenu);
-            break;
+                OnStateRequest(GameState.MainMenu);
+                break;
 
         }
     }
 
+    private void OnDestroy()
+    {
+
+    }
+
+    private void OnStateRequest(GameState newState)
+    {
+        if (_gameState == newState)
+        {
+            return;
+        }
+
+        switch (newState)
+        {
+            case GameState.Playing:
+                LoadtoScene(SceneList._playingSceneName);
+                break;
+
+            case GameState.MainMenu:
+                LoadtoScene(SceneList._mainSceneName);
+                Time.timeScale = 1;
+                break;
+
+            case GameState.Paused:
+                if (_gameState == GameState.GameOver || _gameState == GameState.MainMenu)
+                {
+                    Time.timeScale = 0;
+                }
+                break;
+
+            case GameState.GameOver:
+                break;
+
+        }
+
+        _gameState = newState;
+    }
+
+    private void LoadtoScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+}
     public enum GameState
     {
         Playing,
@@ -68,48 +111,3 @@ public class GameManager : MonoBehaviour
         Systems,
     }
 
-    private void OnDestroy()
-    {
-
-    }
-
-    private void OnStateRequest(GameState stats)
-    {
-        if (_gameState == stats)
-        {
-            return;
-        }
-
-            switch (stats)
-            {
-                case GameState.Playing:
-                    LoadtoScene(SceneList._playingSceneName);
-                    break;
-
-                case GameState.MainMenu:
-                    LoadtoScene(SceneList._mainSceneName);
-                    Time.timeScale = 1;
-                    break;
-
-                case GameState.Paused:
-                if (_gameState == GameState.GameOver || _gameState == GameState.MainMenu)
-                {
-                    Time.timeScale = 0;
-                }
-                break;
-
-                case GameState.GameOver:
-                break;
-
-            }
-
-            _gameState = stats;
-    }
-
-    private void LoadtoScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-    }
-
-
-}

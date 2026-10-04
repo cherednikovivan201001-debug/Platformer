@@ -16,8 +16,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Transform _legs;
 
-    [SerializeField] private CheckDistance _checkDistance;
-
     [SerializeField] private LayerMask _groundLayer;
 
     [SerializeField] private PlayerMoveController _playerMoveController;
@@ -25,6 +23,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioSource _playerFootsteps;
 
     [SerializeField] private float _jumpForce = 5f;
+
+    [SerializeField] private float _checkDelay = 0.1f;
 
     private float _currentSpeed = 0;
 
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private float _moveZ = 0;
 
     private float _timer;
+    private float _checkDistance;
 
     private void OnEnable()
     {
@@ -48,9 +49,9 @@ public class PlayerController : MonoBehaviour
 
         PlayerInput._OnShoot += OnAttack;
 
-        startPosition = transform.position;
-
         PlayerInput._OnJump += OnJumpPressed;
+
+        startPosition = transform.position;
     }
 
     private void OnDisable()
@@ -85,49 +86,38 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    public void OnJumpPressed()
+    {
+        _playerMoveController.OnJumpPressed();
+    }
+
+
     private void FixedUpdate()
     {
         _timer += Time.fixedDeltaTime;
 
         if (_timer >= _checkDelay)
         {
-            CheckForGround();
+            CheckForGrounded();
 
             _timer = 0;
         }
 
         
     }
-    public void OnMovePressed()
-    {
 
-    }
-
-    public void OnJumpPressed()
+    private void CheckForGrounded()
     {
-       _playerMoveController.OnJumpPressed();
-    }
+        bool Hit = Physics2D.Raycast(_legs.position, Vector2.down, _checkDistance, _groundLayer);
 
-    private void CheckForGround()
-    {
-        if (Physics2D.Raycast(_legs.position, Vector2.down, _checkDistance, _groundLayer))
+        if (Hit != _isGrounded)
         {
-            if (!_isGrounded)
-            {
-               _isGrounded = true;
-            }
-        }
-        else
-        {
-            if( _isGrounded )
-            {
-                _isGrounded = false;
-            }
-        }
+           _isGrounded = Hit;
+        }   
     }
 
     private void NotifyGrounded()
     {
-        _playerMoveController;
+        _playerMoveController.SetGrounded(_isGrounded);
     }
 }

@@ -17,15 +17,11 @@ public class PlayerMoveController : MonoBehaviour
 
     [SerializeField] private LayerMask _groundLayer;
 
-
-
-
-
     protected bool _isGrounded = false;
 
     private const string _groundTag = "Ground";
 
-    private float _currentSpeed = 0;
+    private float _currentSpeed = 5f;
 
     private Vector3 _currentMoveVector;
 
@@ -75,19 +71,21 @@ public class PlayerMoveController : MonoBehaviour
 
     public void OnJumpPressed()
     {
-       if( _isGrounded )
+        Debug.Log("Jump Pressed");
+        if ( _isGrounded )
         {
             return;
         }
 
-        _playerRB.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        //_playerRB.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 
-        _isGrounded = false;
+        _playerRB.linearVelocity = new Vector2(_playerRB.linearVelocity.x, _jumpForce);
     }
 
 
     public void SetGrounded(bool grounded)
     {
         _isGrounded = grounded;
+        Debug.Log("Is Grounded: " + _isGrounded);
     }
 }
