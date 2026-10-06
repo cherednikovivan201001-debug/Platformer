@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private EventBoost _inet;
 
-    [SerializeField] private PlayerInput _inputmen;
+    [SerializeField] private PlayerInputManager _inputmen;
 
     private GameState _gameState = GameState.Systems;
 
