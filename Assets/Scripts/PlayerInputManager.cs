@@ -15,12 +15,12 @@ public class PlayersInputMng : MonoBehaviour
     {
         if (context.performed)
         {
-            EventBus.Trigger("Move", gameObject, context.ReadValue<Vector2>());
+            _inet.TriggerMove(context.ReadValue<Vector2>());
         }
         else
         {
             var zero = new Vector2(0, 0);
-            EventBus.Trigger("Move", gameObject, zero);
+            _inet.TriggerMove(zero);
         }
     }
 
@@ -28,12 +28,13 @@ public class PlayersInputMng : MonoBehaviour
     {
         Vector2 lookinput = context.ReadValue<Vector2>();
         if (lookinput.sqrMagnitude >= 3)
-        {   
-            EventBus.Trigger("Look", gameObject, lookinput);
+        {
+            // Debug.Log(lookinput);
+            _inet.TriggerLook(lookinput);
         }
         else
         {
-            EventBus.Trigger("Look", gameObject, Vector2.zero);
+            _inet.TriggerLook(Vector2.zero);
         }
     }
 
@@ -41,8 +42,7 @@ public class PlayersInputMng : MonoBehaviour
     {
         if (context.performed)
         {
-           
-            EventBus.Trigger("Jump", gameObject);
+            _inet.TriggerJump();
         }
     }
 
@@ -50,7 +50,7 @@ public class PlayersInputMng : MonoBehaviour
     {
         if (context.performed)
         {
-            EventBus.Trigger("Dance", game);
+            _inet.TriggerDance();
         }
     }
 
@@ -70,11 +70,14 @@ public class PlayersInputMng : MonoBehaviour
     {
         if (context.started)
         {
-            EventBus.Trigger("Attack", gameObject, true);
+            _inet.TriggerAttack(true);
         }
         if (context.canceled)
         {
-            EventBus.Trigger("Attack", gameObject, false);
+            _inet.TriggerAttack(false);
         }
     }
+
+
+
 }

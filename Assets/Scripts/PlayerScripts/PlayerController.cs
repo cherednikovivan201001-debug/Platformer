@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     private void OnAttack(bool t)
     {
         Debug.Log($"Attack: {t}");
-        _atckController.OnShootPerformed(t);
+        //_atckController.OnShootPerformed(t);
     }
 
     private void OnMovePressed(Vector2 moveInput)
