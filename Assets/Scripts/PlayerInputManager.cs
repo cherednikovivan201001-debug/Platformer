@@ -1,10 +1,11 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayersInputMng : MonoBehaviour
 {
+
+
     private EventBus _inet;
     public void Init(EventBus totz)
     {
@@ -13,29 +14,12 @@ public class PlayersInputMng : MonoBehaviour
 
     public void OnMovePressed(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            _inet.TriggerMove(context.ReadValue<Vector2>());
-        }
-        else
-        {
-            var zero = new Vector2(0, 0);
-            _inet.TriggerMove(zero);
-        }
+        _inet.TriggerMove(context.ReadValue<Vector2>());
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        Vector2 lookinput = context.ReadValue<Vector2>();
-        if (lookinput.sqrMagnitude >= 3)
-        {
-            // Debug.Log(lookinput);
-            _inet.TriggerLook(lookinput);
-        }
-        else
-        {
-            _inet.TriggerLook(Vector2.zero);
-        }
+        _inet.TriggerLook(context.ReadValue<Vector2>());
     }
 
     public void OnJump(InputAction.CallbackContext context)

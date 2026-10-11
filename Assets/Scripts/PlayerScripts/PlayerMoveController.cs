@@ -9,7 +9,7 @@ public class PlayerMoveController : MonoBehaviour
 
     [SerializeField] private AudioSource _playerFootsteps;
 
-    [SerializeField] private PlayerMoveController _playerMoveController;
+    [SerializeField] private PlayerAnimationController _playerAnimationController;
 
     [SerializeField] private float _jumpForce = 5f;
 
@@ -17,11 +17,9 @@ public class PlayerMoveController : MonoBehaviour
 
     [SerializeField] private LayerMask _groundLayer;
 
-    protected bool _isGrounded = false;
+    private bool _isGrounded = false;
 
-    private const string _groundTag = "Ground";
-
-    private float _currentSpeed = 5f;
+    private float currentSpeed;
 
     private Vector3 _currentMoveVector;
 
@@ -39,7 +37,7 @@ public class PlayerMoveController : MonoBehaviour
     {
         if (_currentMoveVector.sqrMagnitude > 0.1f)
         {
-           _currentSpeed = _walkSpeed;
+           currentSpeed = _walkSpeed;
             if (!_playerFootsteps.isPlaying)
             {
                 _playerFootsteps.Play();
@@ -47,7 +45,7 @@ public class PlayerMoveController : MonoBehaviour
         }
         else
         {
-            _currentSpeed = 0;
+            currentSpeed = 0;
             if (_playerFootsteps.isPlaying)
             {
                 _playerFootsteps.Stop();
@@ -56,22 +54,20 @@ public class PlayerMoveController : MonoBehaviour
 
         Vector2 move = _currentMoveVector * _walkSpeed *    Time.fixedDeltaTime;
 
-
-
+        _playerAnimationController.UpdateAnimation(currentSpeed);
+        _playerRB.MovePosition(_playerRB.position + move);
     }
 
     public void OnMovePressed(Vector2 moveInput)
     {
         float _moveX = moveInput.x;
 
-        float _moveY = moveInput.y;
-
-        _currentMoveVector = transform.right * _moveX + transform.up * _moveY;
+        _currentMoveVector = transform.right * _moveX;
     }
 
     public void OnJumpPressed()
     {
-        Debug.Log("Jump Pressed");
+        
         if ( _isGrounded )
         {
             return;
