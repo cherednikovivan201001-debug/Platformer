@@ -6,8 +6,8 @@ public class PlayersInputMng : MonoBehaviour
 {
 
 
-    private EventBus _inet;
-    public void Init(EventBus totz)
+    private EventBoost _inet;
+    public void Init(EventBoost totz)
     {
         _inet = totz;
     }

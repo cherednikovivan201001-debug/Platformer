@@ -5,7 +5,7 @@ public class PlayerMoveController : MonoBehaviour
 {
     [SerializeField] private float _walkSpeed;
 
-    [SerializeField] private Rigidbody _playerRB;
+    [SerializeField] private Rigidbody2D _playerRB;
 
     [SerializeField] private AudioSource _playerFootsteps;
 

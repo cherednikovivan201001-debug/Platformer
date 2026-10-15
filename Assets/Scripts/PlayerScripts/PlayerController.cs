@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private PlayerMoveController _playerMoveController;
 
-    private float timer = 0f;
+    private float _timer = 0f;
 
     private float _checkDelay = 0.2f;
 

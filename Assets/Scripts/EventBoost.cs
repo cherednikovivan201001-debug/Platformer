@@ -52,4 +52,9 @@ public class EventBoost : MonoBehaviour
     {
         _OnSprint?.Invoke(isrunning);
     }
+
+    public void TriggerAttack(bool isattacking)
+    {
+        _OnShoot?.Invoke(isattacking);
+    }
 }
