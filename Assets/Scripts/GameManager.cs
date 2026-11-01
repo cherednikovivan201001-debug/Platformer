@@ -97,11 +97,6 @@ public class GameManager : MonoBehaviour
         _gameState = newState;
     }
 
-    private void LoadtoScene(string sc)
-    {
-        GameManager.LoadtoScene(sc);
-    }
-
     private void LoadtoScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
